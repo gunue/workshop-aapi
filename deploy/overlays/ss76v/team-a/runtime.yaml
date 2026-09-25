@@ -9,7 +9,7 @@ spec:
       - name: checkout-api
         env:
         - name: CHECKOUT_MODE
-          value: invalid-demo-mode
+          value: normal
         resources:
           requests:
             cpu: 100m
