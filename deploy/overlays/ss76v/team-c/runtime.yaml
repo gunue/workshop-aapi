@@ -12,7 +12,7 @@ spec:
           value: normal
         resources:
           requests:
-            cpu: 100m
+            cpu: 700m
             memory: 64Mi
           limits:
             cpu: 800m
