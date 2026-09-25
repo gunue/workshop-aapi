@@ -1,0 +1,25 @@
+name: Validate workshop fixture
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install render client with checksum verification
+        run: |
+          curl --fail --silent --show-error --location -o kubectl https://dl.k8s.io/release/v1.33.4/bin/linux/amd64/kubectl
+          curl --fail --silent --show-error --location -o kubectl.sha256 https://dl.k8s.io/release/v1.33.4/bin/linux/amd64/kubectl.sha256
+          echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+          chmod +x kubectl
+          mkdir -p "$RUNNER_TEMP/workshop-bin"
+          mv kubectl "$RUNNER_TEMP/workshop-bin/"
+          echo "$RUNNER_TEMP/workshop-bin" >> "$GITHUB_PATH"
+      - name: Validate server, deployment scope and intentional fault contracts
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -r requirements-dev.txt
+          .venv/bin/python -B -m unittest discover -s tests -v

@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workshop-checkout-a
+  namespace: openshift-gitops
+spec:
+  project: workshop-aapi
+  source:
+    repoURL: https://github.com/gunue/workshop-aapi.git
+    targetRevision: lab/ss76v
+    path: deploy/overlays/ss76v/team-a
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: workshop-team-a
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - FailOnSharedResource=true

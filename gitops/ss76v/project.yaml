@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: workshop-aapi
+  namespace: openshift-gitops
+spec:
+  description: Synthetic workshop fixtures; local demo cluster only
+  sourceRepos:
+  - https://github.com/gunue/workshop-aapi.git
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: workshop-team-a
+  - server: https://kubernetes.default.svc
+    namespace: workshop-team-b
+  - server: https://kubernetes.default.svc
+    namespace: workshop-team-c
+  clusterResourceWhitelist: []
+  clusterResourceBlacklist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: ''
+    kind: ServiceAccount
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: ResourceQuota
+  - group: ''
+    kind: LimitRange
+  - group: apps
+    kind: Deployment
+  - group: route.openshift.io
+    kind: Route
