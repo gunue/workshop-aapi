@@ -4,4 +4,4 @@ metadata:
   name: checkout-api
 spec:
   selector:
-    app.kubernetes.io/name: checkout-api-mismatch
+    app.kubernetes.io/name: checkout-api
