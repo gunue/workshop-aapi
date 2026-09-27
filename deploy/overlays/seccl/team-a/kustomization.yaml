@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: workshop-team-a
+resources:
+- ../../../base
+images:
+- name: workshop-aapi
+  newName: docker.io/gunayeng/workshop-aapi
+  digest: sha256:acaf0fa9e70426767a319ac69ad1582e54353ff523dfcb2a1a4afcf0b6d54454
+patches:
+- path: runtime.yaml
+- path: service-selector.yaml

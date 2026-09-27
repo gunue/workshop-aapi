@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: workshop-seccl-team-c
+  namespace: openshift-gitops
+spec:
+  project: workshop-seccl
+  source:
+    repoURL: https://github.com/gunue/workshop-aapi.git
+    targetRevision: lab/seccl
+    path: deploy/overlays/seccl/team-c
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: workshop-team-c
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - FailOnSharedResource=true
